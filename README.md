@@ -2,21 +2,26 @@
 Side-Channel Leakage and Countermeasure Characterization
 
 # Original README
-This program is part of the DPA Contest. For more informations about the 
-contest, take a look at the following URL: http://www.dpacontest.org
++-------------------------------------------------+
+| Using matlab with the attack wrapper under UNIX |
++-------------------------------------------------+
 
-Side-Channel traces to use:
-Some side channel traces have been stored on the PostgreSQL server dpa.enst.fr
-at the Telecom-Paristech University. They are organised by campaigns stored
-in distinct database tables. Each campaign/table contains side-channel traces
-measured by our acquisition platform on the same crypto-processor, the same
-day, using the same key. Each trace is associated to some informations, like 
-the clear message, the key and the cryptogram. 
-You can access to these traces using a PostgreSQL client on your computer with
-username "guest" and password "guest", or directly with your program.
-The list of the tables that can be used for this contest with their
-description is maintained up to date on the dpa contest web site: 
-http://www.dpacontest.org/tables.php
+mkfifo matlab_i;
+mkfifo matlab_o;
+
+0>matlab_i;
+matlab_o>1;
+
+/comelec/softs/opt/matlab/2009b/bin/matlab -nodisplay -nosplash -r attack.m
+
+# attack.m:
+# Example of prototyping code...
+>> fi = fopen( 'matlab_i', 'r' );
+>> fo = fopen( 'matlab_o', 'w' );
+>> fprintf( fo, 'Hello world!' );
+>> fread( fi, 5 )                
+>> quit
+
 
 Provided implementation:
 We provide a reference implementation written in python, which implements a
